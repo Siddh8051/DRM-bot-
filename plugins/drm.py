@@ -27,11 +27,18 @@ async def drm(bot: ace, m: Message):
     print(mpd, name, Q)
 
     keys = ""
-    inputKeys = await bot.ask(m.chat.id, "**Send Kid:Key**")
-    keysData = inputKeys.text.split("\n")
-    for k in keysData:
-        key = f"{k} "
-        keys+=key
+    mpd_file = mpd  # MPD link provided by user
+    cmd = f"ffmpeg -i {mpd_file} -encryption_key_info -v debug"
+    output = subprocess.check_output(cmd, shell=True)
+
+# Parse output to extract Kid and Key
+    lines = output.decode().splitlines()
+    for line in lines:
+        if "Key ID" in line:
+            kid = line.split(":")[1].strip()
+        elif "Encryption key" in line:
+            key = line.split(":")[1].strip()
+    keys = f"{kid}:{key}"
     print(keys)
 
     BOT = TgClient(bot, m, path)
