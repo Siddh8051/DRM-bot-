@@ -25,7 +25,7 @@ async def drm(bot: ace, m: Message):
 
     inputData = await bot.ask(m.chat.id, "**Send**\n\nMPD\nNAME\nQUALITY\nCAPTION")
     if inputData and inputData.text:
-    try:
+        try:
         parts = inputData.text.split("\n")
         if len(parts) != 4:
             await m.reply_text("Invalid input format!")
