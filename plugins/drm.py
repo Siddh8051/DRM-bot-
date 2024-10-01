@@ -51,7 +51,6 @@ async def get_keys(self):
             key = line.split(":")[1].strip()
             keys = f"{kid}:{key}"
     return keys
-     ''}
     print(keys)
 
     BOT = TgClient(bot, m, path)
