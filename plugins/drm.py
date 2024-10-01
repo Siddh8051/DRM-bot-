@@ -28,29 +28,18 @@ async def drm(bot: ace, m: Message):
     name = f"{TgClient.parse_name(raw_name)} ({Q}p)"
     print(mpd, name, Q)
     
-def __init__(self, mpd):
+class Download:
+    def __init__(self, mpd):
         self._remoteapi = "https://app.magmail.eu.org/get_keys"
         self.mpd = mpd
 
-async def get_keys(self):
-    mpd_file = self.mpd
-    cmd = f"ffmpeg -i {mpd_file} -decryption_key -v debug"
-    output = subprocess.check_output(cmd, shell=True)
-    lines = output.decode().splitlines()
-    keys = ""
-    mpd_file = mpd  # MPD link provided by user
-    cmd = f"ffmpeg -i {mpd_file} -decryption_key -v debug"
-    output = subprocess.check_output(cmd, shell=True)
-
-# Parse output to extract Kid and Key
-    lines = output.decode().splitlines()
-    for line in lines:
-        if "Key ID" in line:
-            kid = line.split(":")[1].strip()
-        elif "Encryption key" in line:
-            key = line.split(":")[1].strip()
-            keys = f"{kid}:{key}"
-    return keys
+    async def get_keys(self):
+        async with aiohttp.ClientSession() as session:
+            async with session.post(self._remoteapi, json={"mpd": self.mpd}) as response:
+                data = await response.json()
+                # Assuming the API returns keys in the format "KID:KEY"
+                keys = data["keys"]
+                return keys
     print(keys)
 
     BOT = TgClient(bot, m, path)
