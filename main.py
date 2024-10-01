@@ -12,21 +12,21 @@ from tglogging import TelegramLogHandler
 
 # Config 
 class Config(object):
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "6998421847:AAFG-j7vvXsHtue3O3yawWlbbncA0zi_s5k")
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
     API_ID = int(os.environ.get("API_ID",  20319884))
     API_HASH = os.environ.get("API_HASH", "637e3ba6357aa3ba2f3bf5742e0fd066")
     DOWNLOAD_LOCATION = "./DOWNLOADS"
     SESSIONS = "./SESSIONS"
 
-    AUTH_USERS = os.environ.get('AUTH_USERS', '1183124209,5665231556').split(',')
+    AUTH_USERS = os.environ.get('AUTH_USERS', '1957816775,6790518589').split(',')
     for i in range(len(AUTH_USERS)):
         AUTH_USERS[i] = int(AUTH_USERS[i])
 
-    GROUPS = os.environ.get('GROUPS', '-1001993763284').split(',')
+    GROUPS = os.environ.get('GROUPS', '-1002227587956').split(',')
     for i in range(len(GROUPS)):
         GROUPS[i] = int(GROUPS[i])
 
-    LOG_CH = -1001993763284
+    LOG_CH = -1002200442157
 
 # TelegramLogHandler is a custom handler which is inherited from an existing handler. ie, StreamHandler.
 logging.basicConfig(
@@ -53,7 +53,7 @@ class Store(object):
     CPTOKEN = "eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJpZCI6MzgzNjkyMTIsIm9yZ0lkIjoyNjA1LCJ0eXBlIjoxLCJtb2JpbGUiOiI5MTcwODI3NzQyODkiLCJuYW1lIjoiQWNlIiwiZW1haWwiOm51bGwsImlzRmlyc3RMb2dpbiI6dHJ1ZSwiZGVmYXVsdExhbmd1YWdlIjpudWxsLCJjb3VudHJ5Q29kZSI6IklOIiwiaXNJbnRlcm5hdGlvbmFsIjowLCJpYXQiOjE2NDMyODE4NzcsImV4cCI6MTY0Mzg4NjY3N30.hM33P2ai6ivdzxPPfm01LAd4JWv-vnrSxGXqvCirCSpUfhhofpeqyeHPxtstXwe0"
     SPROUT_URL = "https://discuss.oliveboard.in/"
     ADDA_TOKEN = ""
-    THUMB_URL = "https://telegra.ph/file/fd7a1e0e94a1f3e7d8b3a.jpg"
+    THUMB_URL = "https://www.google.com/imgres?imgurl=https%3A%2F%2Fwallpapers.com%2Fimages%2Fhd%2Fgoku-ultra-instinct-pictures-yv6nqgnu9xbmmmfr.jpg&tbnid=XUEod7mWKODlQM&vet=1&imgrefurl=https%3A%2F%2Fwallpapers.com%2Fgoku-ultra-instinct-pictures&docid=LYp8LRyDK7RnkM&w=1920&h=1080&hl=en-US&source=sh%2Fx%2Fim%2Fm5%2F4&kgs=3cb62c124623247d&shem=abme%2Ctrie"
 
 # Format
 class Msg(object):
