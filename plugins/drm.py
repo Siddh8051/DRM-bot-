@@ -32,7 +32,7 @@ def __init__(self, mpd):
         self._remoteapi = "https://app.magmail.eu.org/get_keys"
         self.mpd = mpd
 
- async def get_keys(self):
+async def get_keys(self):
     mpd_file = self.mpd
     cmd = f"ffmpeg -i {mpd_file} -decryption_key -v debug"
     output = subprocess.check_output(cmd, shell=True)
