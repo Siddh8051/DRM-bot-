@@ -23,8 +23,12 @@ class Config(object):
         AUTH_USERS[i] = int(AUTH_USERS[i])
 
     GROUPS = os.environ.get('GROUPS', '1002227587956').split(',')
-    for i in range(len(GROUPS)):
-        GROUPS[i] = int(GROUPS[i])
+    GROUPS = [abs(int(group)) for group in GROUPS]
+    except ValueError:
+    print("Invalid chat ID format. Please use integers.")
+    
+    #for i in range(len(GROUPS)):
+     #   GROUPS[i] = int(GROUPS[i])
 
     LOG_CH = -1002200442157
 
