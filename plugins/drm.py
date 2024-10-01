@@ -28,7 +28,7 @@ async def drm(bot: ace, m: Message):
 
     keys = ""
     mpd_file = mpd  # MPD link provided by user
-    cmd = f"ffmpeg -i {mpd_file} -encryption_key_info -v debug"
+    cmd = f"ffmpeg -i {mpd_file} -decryption_key -v debug"
     output = subprocess.check_output(cmd, shell=True)
 
 # Parse output to extract Kid and Key
