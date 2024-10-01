@@ -40,7 +40,7 @@ class Download:
                 # Assuming the API returns keys in the format "KID:KEY"
                 keys = data["keys"]
                 return keys
-    print(keys)
+   
 async def drm(bot: ace, m: Message):
     BOT = TgClient(bot, m, path)
     Thumb = await BOT.thumb()
