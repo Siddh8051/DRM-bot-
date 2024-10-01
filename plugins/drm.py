@@ -24,8 +24,22 @@ async def drm(bot: ace, m: Message):
     os.makedirs(path, exist_ok=True)
 
     inputData = await bot.ask(m.chat.id, "**Send**\n\nMPD\nNAME\nQUALITY\nCAPTION")
-    mpd, raw_name, Q, CP = inputData.text.split("\n")
-    name = f"{TgClient.parse_name(raw_name)} ({Q}p)"
+    if inputData and inputData.text:
+    try:
+        parts = inputData.text.split("\n")
+        if len(parts) != 4:
+            await m.reply_text("Invalid input format!")
+            return
+        mpd, raw_name, Q, CP = parts
+        name = f"{TgClient.parse_name(raw_name)} ({Q}p)"
+        print(mpd, name, Q)
+    except ValueError:
+        await m.reply_text("Invalid input format!")
+        return
+else:
+    await m.reply_text("Invalid input!")
+    return
+
     print(mpd, name, Q)
     
 class Download:
