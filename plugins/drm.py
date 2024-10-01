@@ -12,7 +12,7 @@ from handlers.uploader import Upload_to_Tg
 from handlers.tg import TgClient
 
 # Define authentication headers
-auth_headers = "Authorization: Bearer eyJjb3Vyc2VJZCI6IjQ1NjY4NyIsInR1dG9ySWQiOm51bGwsIm9yZ0lkIjo0ODA2MTksImNhdGVnb3J5SWQiOm51bGx9"
+auth_headers = "eyJjb3Vyc2VJZCI6IjQ1NjY4NyIsInR1dG9ySWQiOm51bGwsIm9yZ0lkIjo0ODA2MTksImNhdGVnb3J5SWQiOm51bGx9"
 
 @ace.on_message(
     (filters.chat(Config.GROUPS) | filters.chat(Config.AUTH_USERS)) &
