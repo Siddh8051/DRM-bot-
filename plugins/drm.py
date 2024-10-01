@@ -43,7 +43,7 @@ class Download:
     print(keys)
 
     BOT = TgClient(bot, m, path)
-    Thumb = await BOT.thumb()
+    Thumb = BOT.thumb()
     prog  = await bot.send_message(m.chat.id, f"**Downloading Drm Video!** - [{name}]({mpd})")
 
     cmd1 = f'yt-dlp -o "{path}/fileName.%(ext)s" -f "bestvideo[height<={int(Q)}]+bestaudio" --allow-unplayable-format --external-downloader aria2c "{mpd}"'
