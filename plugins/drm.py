@@ -11,6 +11,8 @@ import sys
 from handlers.uploader import Upload_to_Tg
 from handlers.tg import TgClient
 
+# Define authentication headers
+auth_headers = "Authorization: Bearer eyJjb3Vyc2VJZCI6IjQ1NjY4NyIsInR1dG9ySWQiOm51bGwsIm9yZ0lkIjo0ODA2MTksImNhdGVnb3J5SWQiOm51bGx9"
 
 @ace.on_message(
     (filters.chat(Config.GROUPS) | filters.chat(Config.AUTH_USERS)) &
@@ -28,7 +30,7 @@ async def drm(bot: ace, m: Message):
 
     keys = ""
     mpd_file = mpd  # MPD link provided by user
-    cmd = f"ffmpeg -i {mpd_file} -decryption_key -v debug"
+    cmd = f"ffmpeg -i {mpd_file} -headers '{auth_headers}' -decryption_key -v debug"
     output = subprocess.check_output(cmd, shell=True)
 
 # Parse output to extract Kid and Key
