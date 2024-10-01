@@ -12,7 +12,7 @@ from handlers.uploader import Upload_to_Tg
 from handlers.tg import TgClient
 
 # Define authentication headers
-auth_headers = "eyJjb3Vyc2VJZCI6IjQ1NjY4NyIsInR1dG9ySWQiOm51bGwsIm9yZ0lkIjo0ODA2MTksImNhdGVnb3J5SWQiOm51bGx9"
+#auth_headers = "eyJjb3Vyc2VJZCI6IjQ1NjY4NyIsInR1dG9ySWQiOm51bGwsIm9yZ0lkIjo0ODA2MTksImNhdGVnb3J5SWQiOm51bGx9"
 
 @ace.on_message(
     (filters.chat(Config.GROUPS) | filters.chat(Config.AUTH_USERS)) &
@@ -27,10 +27,19 @@ async def drm(bot: ace, m: Message):
     mpd, raw_name, Q, CP = inputData.text.split("\n")
     name = f"{TgClient.parse_name(raw_name)} ({Q}p)"
     print(mpd, name, Q)
+    
+def __init__(self, mpd):
+        self._remoteapi = "https://app.magmail.eu.org/get_keys"
+        self.mpd = mpd
 
+ async def get_keys(self):
+    mpd_file = self.mpd
+    cmd = f"ffmpeg -i {mpd_file} -decryption_key -v debug"
+    output = subprocess.check_output(cmd, shell=True)
+    lines = output.decode().splitlines()
     keys = ""
     mpd_file = mpd  # MPD link provided by user
-    cmd = f"ffmpeg -i {mpd_file} -headers '{auth_headers}' -decryption_key -v debug"
+    cmd = f"ffmpeg -i {mpd_file} -decryption_key -v debug"
     output = subprocess.check_output(cmd, shell=True)
 
 # Parse output to extract Kid and Key
@@ -40,7 +49,9 @@ async def drm(bot: ace, m: Message):
             kid = line.split(":")[1].strip()
         elif "Encryption key" in line:
             key = line.split(":")[1].strip()
-    keys = f"{kid}:{key}"
+            keys = f"{kid}:{key}"
+    return keys
+     ''}
     print(keys)
 
     BOT = TgClient(bot, m, path)
