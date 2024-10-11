@@ -10,9 +10,7 @@ import shutil
 import sys
 from handlers.uploader import Upload_to_Tg
 from handlers.tg import TgClient
-import aiohttp
-# Define authentication headers
-#auth_headers = "eyJjb3Vyc2VJZCI6IjQ1NjY4NyIsInR1dG9ySWQiOm51bGwsIm9yZ0lkIjo0ODA2MTksImNhdGVnb3J5SWQiOm51bGx9"
+
 
 @ace.on_message(
     (filters.chat(Config.GROUPS) | filters.chat(Config.AUTH_USERS)) &
@@ -24,38 +22,18 @@ async def drm(bot: ace, m: Message):
     os.makedirs(path, exist_ok=True)
 
     inputData = await bot.ask(m.chat.id, "**Send**\n\nMPD\nNAME\nQUALITY\nCAPTION")
-    if inputData and inputData.text:
-        try:
-            parts = inputData.text.split("\n")
-            if len(parts) != 4:
-                await m.reply_text("Invalid input format!")
-                return
-            mpd, raw_name, Q, CP = parts
-            name = f"{TgClient.parse_name(raw_name)} ({Q}p)"
-            print(mpd, name, Q)
-        except ValueError:
-            await m.reply_text("Invalid input format!")
-            return
-    else:
-        await m.reply_text("Invalid input!")
-        return
+    mpd, raw_name, Q, CP = inputData.text.split("\n")
+    name = f"{TgClient.parse_name(raw_name)} ({Q}p)"
+    print(mpd, name, Q)
 
-    
-    
-class Download:
-    def __init__(self, mpd):
-        self._remoteapi = "https://app.magmail.eu.org/get_keys"
-        self.mpd = mpd
+    keys = ""
+    inputKeys = await bot.ask(m.chat.id, "**Send Kid:Key**")
+    keysData = inputKeys.text.split("\n")
+    for k in keysData:
+        key = f"{k} "
+        keys+=key
+    print(keys)
 
-    async def get_keys(self):
-        async with aiohttp.ClientSession() as session:
-            async with session.post(self._remoteapi, json={"mpd": self.mpd}) as response:
-                data = await response.json()
-                # Assuming the API returns keys in the format "KID:KEY"
-                keys = data["keys"]
-                return keys
-   
-async def drm(bot: ace, m: Message):
     BOT = TgClient(bot, m, path)
     Thumb = await BOT.thumb()
     prog  = await bot.send_message(m.chat.id, f"**Downloading Drm Video!** - [{name}]({mpd})")
